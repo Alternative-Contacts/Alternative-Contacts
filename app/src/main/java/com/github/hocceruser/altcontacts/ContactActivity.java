@@ -94,8 +94,7 @@ public class ContactActivity extends Activity {
 
 	private void initializeLogic() {
 		index = Integer.parseInt(getIntent().getStringExtra("index"));
-		contactsMapsList = new Gson().fromJson(preferencesContactsList.getString("MapList", ""), new TypeToken<ArrayList<HashMap<String, Object>>>() {
-		}.getType());
+		contactsMapsList = new Gson().fromJson(preferencesContactsList.getString("MapList", ""), new TypeToken<ArrayList<HashMap<String, Object>>>(){}.getType());
 		edittextname.setText(contactsMapsList.get(index).get("name").toString());
 		edittextnumber.setText(contactsMapsList.get(index).get("number").toString());
 	}

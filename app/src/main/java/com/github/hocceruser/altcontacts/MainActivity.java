@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
 	private ArrayList<HashMap<String, Object>> contactsMapsList = new ArrayList<>();
 	private ArrayList<String> contactsNamesList = new ArrayList<String>();
 
-	private SharedPreferences contactsList;
+	private SharedPreferences preferencesContactsList;
 
 
 	@Override
@@ -61,7 +61,7 @@ public class MainActivity extends Activity {
 		Button buttonADD = (Button) findViewById(R.id.buttonADD);
 		listview = (ListView) findViewById(R.id.listview);
 
-		contactsList = getSharedPreferences("contactsList", Activity.MODE_PRIVATE);
+		preferencesContactsList = getSharedPreferences("preferencesContactsList", Activity.MODE_PRIVATE);
 
 
 		buttonADD.setOnClickListener(new View.OnClickListener() {
@@ -93,9 +93,9 @@ public class MainActivity extends Activity {
 	}
 
 	private void initializeLogic() {
-		if (!contactsList.getString("filled", "").equals("1")) {
-			contactsList.edit().putString("MapList", new Gson().toJson(contactsMapsList)).apply();
-			contactsList.edit().putString("filled", "1").apply();
+		if (!preferencesContactsList.getString("filled", "").equals("1")) {
+			preferencesContactsList.edit().putString("MapList", new Gson().toJson(contactsMapsList)).apply();
+			preferencesContactsList.edit().putString("filled", "1").apply();
 		}
 	}
 
@@ -103,7 +103,7 @@ public class MainActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 		contactsMapsList.clear();
-		contactsMapsList = new Gson().fromJson(contactsList.getString("MapList", ""), new TypeToken<ArrayList<HashMap<String, Object>>>() {
+		contactsMapsList = new Gson().fromJson(preferencesContactsList.getString("MapList", ""), new TypeToken<ArrayList<HashMap<String, Object>>>() {
 		}.getType());
 		contactsNamesList.clear();
 		double i = 0;
@@ -117,7 +117,7 @@ public class MainActivity extends Activity {
 	}
 
 	private void _save() {
-		contactsList.edit().putString("MapList", new Gson().toJson(contactsMapsList)).apply();
+		preferencesContactsList.edit().putString("MapList", new Gson().toJson(contactsMapsList)).apply();
 	}
 
 }
