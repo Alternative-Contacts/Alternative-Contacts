@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
 
 				Intent contactIntent = new Intent();
 				contactIntent.setClass(getApplicationContext(), ContactActivity.class);
-				contactIntent.putExtra("index", String.valueOf((contactsMapsList.size() - 1)));
+				contactIntent.putExtra("index", String.valueOf(_position));
 				startActivity(contactIntent);
 			}
 		});
