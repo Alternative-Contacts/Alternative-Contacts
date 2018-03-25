@@ -1,25 +1,23 @@
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical"
-	>
-	<Button
-		android:id="@+id/button6"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:padding="8dp"
-		android:background="#303F9F"
-		android:gravity="center_horizontal|center_vertical"
-		android:text="Add new..."
-		android:textSize="12sp"
-		android:textColor="#FFFFFF"
-		/>
-	<ListView
-		android:id="@+id/listview5"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:padding="8dp"
-		android:choiceMode="none"
-		/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#303F9F"
+        android:gravity="center_horizontal|center_vertical"
+        android:padding="8dp"
+        android:text="Add new..."
+        android:textColor="#FFFFFF"
+        android:textSize="12sp" />
+
+    <ListView
+        android:id="@+id/listview5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:choiceMode="none"
+        android:padding="8dp" />
 </LinearLayout>
