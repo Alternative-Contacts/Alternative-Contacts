@@ -39,7 +39,7 @@ import java.util.HashMap;
 
 public class MainActivity extends Activity {
 
-	private ListView listview5;
+	private ListView listview;
 
 	private HashMap<String, Object> newContact = new HashMap<>();
 
@@ -57,15 +57,14 @@ public class MainActivity extends Activity {
 		initializeLogic();
 	}
 
-	private void  initialize() {
-		Button button6 = (Button) findViewById(R.id.button6);
-		listview5 = (ListView) findViewById(R.id.listview5);
+	private void initialize() {
+		Button buttonADD = (Button) findViewById(R.id.buttonADD);
+		listview = (ListView) findViewById(R.id.listview);
 
 		contactsList = getSharedPreferences("contactsList", Activity.MODE_PRIVATE);
 
 
-
-		button6.setOnClickListener(new View.OnClickListener() {
+		buttonADD.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _v) {
 
@@ -76,24 +75,24 @@ public class MainActivity extends Activity {
 				newContact.put("number", "");
 				contactsMapsList.add(newContact);
 				_save();
-				contactIntent.putExtra("index", String.valueOf((long)(contactsMapsList.size() - 1)));
+				contactIntent.putExtra("index", String.valueOf((contactsMapsList.size() - 1)));
 				startActivity(contactIntent);
 			}
 		});
-		listview5.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView _parent, View _view, final int _position, long _id) {
 
 				Intent contactIntent = new Intent();
 				contactIntent.setClass(getApplicationContext(), ContactActivity.class);
-				contactIntent.putExtra("index", String.valueOf((long)(contactsMapsList.size() - 1)));
+				contactIntent.putExtra("index", String.valueOf((contactsMapsList.size() - 1)));
 				startActivity(contactIntent);
 			}
 		});
 
 	}
 
-	private void  initializeLogic() {
+	private void initializeLogic() {
 		if (!contactsList.getString("filled", "").equals("1")) {
 			contactsList.edit().putString("MapList", new Gson().toJson(contactsMapsList)).apply();
 			contactsList.edit().putString("filled", "1").apply();
@@ -103,20 +102,21 @@ public class MainActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-				contactsMapsList.clear();
-				contactsMapsList = new Gson().fromJson(contactsList.getString("MapList", ""), new TypeToken<ArrayList<HashMap<String, Object>>>(){}.getType());
-				contactsNamesList.clear();
+		contactsMapsList.clear();
+		contactsMapsList = new Gson().fromJson(contactsList.getString("MapList", ""), new TypeToken<ArrayList<HashMap<String, Object>>>() {
+		}.getType());
+		contactsNamesList.clear();
 		double i = 0;
-				for(int _repeat15 = 0; _repeat15 < (contactsMapsList.size()); _repeat15++) {
-					if (i < contactsMapsList.size()) {
-						contactsNamesList.add(contactsMapsList.get((int) i).get("name").toString());
-					}
-					i++;
-				}
-				listview5.setAdapter(new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, contactsNamesList));
+		for (int _repeat15 = 0; _repeat15 < (contactsMapsList.size()); _repeat15++) {
+			if (i < contactsMapsList.size()) {
+				contactsNamesList.add(contactsMapsList.get((int) i).get("name").toString());
+			}
+			i++;
+		}
+		listview.setAdapter(new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, contactsNamesList));
 	}
 
-	private void _save () {
+	private void _save() {
 		contactsList.edit().putString("MapList", new Gson().toJson(contactsMapsList)).apply();
 	}
 

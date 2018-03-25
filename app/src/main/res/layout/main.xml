@@ -4,7 +4,7 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/buttonADD"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#303F9F"
@@ -15,7 +15,7 @@
         android:textSize="12sp" />
 
     <ListView
-        android:id="@+id/listview5"
+        android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:choiceMode="none"

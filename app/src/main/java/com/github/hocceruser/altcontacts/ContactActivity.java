@@ -41,11 +41,11 @@ public class ContactActivity extends Activity {
 	private EditText edittextname;
 	private EditText edittextnumber;
 
-	private double index = 0;
+	private int index = 0;
 
 	private ArrayList<HashMap<String, Object>> contactsMapsList = new ArrayList<>();
 
-	private SharedPreferences contactsList;
+	private SharedPreferences preferencesContactsList;
 
 
 	@Override
@@ -56,25 +56,25 @@ public class ContactActivity extends Activity {
 		initializeLogic();
 	}
 
-	private void  initialize() {
+	private void initialize() {
 		Button buttoncall = (Button) findViewById(R.id.buttoncall);
 		edittextname = (EditText) findViewById(R.id.edittextname);
 		edittextnumber = (EditText) findViewById(R.id.edittextnumber);
 		Button buttondel = (Button) findViewById(R.id.buttondel);
 		Button buttonOK = (Button) findViewById(R.id.buttonOK);
 
-		contactsList = getSharedPreferences("contactsList", Activity.MODE_PRIVATE);
+		preferencesContactsList = getSharedPreferences("preferencesContactsList", Activity.MODE_PRIVATE);
 
 
 		buttonOK.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View _v) { 
+			public void onClick(View _v) {
 				finish();
 			}
 		});
 		buttondel.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View _v) { 
+			public void onClick(View _v) {
 				edittextname.setText("");
 				edittextnumber.setText("");
 				finish();
@@ -92,32 +92,32 @@ public class ContactActivity extends Activity {
 
 	}
 
-	private void  initializeLogic() {
-		index = Double.parseDouble(getIntent().getStringExtra("index"));
-		contactsMapsList = new Gson().fromJson(contactsList.getString("MapList", ""), new TypeToken<ArrayList<HashMap<String, Object>>>(){}.getType());
-		edittextname.setText(contactsMapsList.get((int)index).get("name").toString());
-		edittextnumber.setText(contactsMapsList.get((int)index).get("number").toString());
+	private void initializeLogic() {
+		index = Integer.parseInt(getIntent().getStringExtra("index"));
+		contactsMapsList = new Gson().fromJson(preferencesContactsList.getString("MapList", ""), new TypeToken<ArrayList<HashMap<String, Object>>>() {
+		}.getType());
+		edittextname.setText(contactsMapsList.get(index).get("name").toString());
+		edittextnumber.setText(contactsMapsList.get(index).get("number").toString());
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-				if ((edittextnumber.getText().toString().length() > 0) || (edittextname.getText().toString().length() > 0)) {
-					contactsMapsList.get((int)index).put("name", edittextname.getText().toString());
-					contactsMapsList.get((int)index).put("number", edittextnumber.getText().toString());
+		if ((edittextnumber.getText().toString().length() > 0) || (edittextname.getText().toString().length() > 0)) {
+			contactsMapsList.get(index).put("name", edittextname.getText().toString());
+			contactsMapsList.get(index).put("number", edittextnumber.getText().toString());
 				/*	//TODO remove -- debugging
 					if (edittextname.getText().toString().equals("test123")){
 						throw new RuntimeException("test123");
 					}*/
-				}
-				else {
-					_delete();
-				}
-				contactsList.edit().putString("MapList", new Gson().toJson(contactsMapsList)).apply();
+		} else {
+			_delete();
+		}
+		preferencesContactsList.edit().putString("MapList", new Gson().toJson(contactsMapsList)).apply();
 	}
 
-	private void _delete () {
-		contactsMapsList.remove((int)(index));
+	private void _delete() {
+		contactsMapsList.remove(index);
 		edittextname.setText("");
 		edittextnumber.setText("");
 	}
